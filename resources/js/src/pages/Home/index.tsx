@@ -55,7 +55,19 @@ const Home: React.FC = () => {
   const alert = useAlert()
 
   function copytoClipboard(result: LinkProps) {
-    navigator.clipboard.writeText(result.url)
+    const input = document.createElement('input')
+
+    input.value = result.url
+    input.style.position = 'fixed'
+    input.style.top = '-9999999999999999px'
+    input.style.left = '-9999999999999999px'
+
+    document.body.appendChild(input)
+
+    input.focus()
+    input.select()
+    document.execCommand('copy')
+    input.remove()
 
     setCopiedIds((state) => [...state, result.id])
 
