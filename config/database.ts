@@ -44,7 +44,7 @@ const databaseConfig: DatabaseConfig = {
               password: Env.get('PG_PASSWORD', ''),
               database: Env.get('PG_DB_NAME'),
             }
-          : Env.get('DATABASE_URL'),
+          : Env.get('DATABASE_URL') + '?ssl=no-verify',
       migrations: {
         naturalSort: true,
       },
