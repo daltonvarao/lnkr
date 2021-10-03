@@ -27,6 +27,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.resource('links', 'LinksController').apiOnly()
+  Route.resource('short-links', 'ShortLinksController').apiOnly()
   Route.resource('tags', 'TagsController').apiOnly()
   Route.resource('profile', 'ProfileController').apiOnly().only(['index'])
 })

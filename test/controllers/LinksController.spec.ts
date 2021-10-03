@@ -80,6 +80,40 @@ test.group('LinksController', (group) => {
     assert.property(response.body, 'link')
   })
 
+  test('should POST in /api/links short link if short defined', async (assert) => {
+    await LinkFactory.merge({ title: 'Aula de Automação', userId: user.id }).create()
+    const tags = await TagFactory.createMany(2)
+
+    await tags[0].load('links')
+    assert.lengthOf(tags[0].links, 0)
+
+    const response = await api
+      .post('/links')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        title: 'Lnkr',
+        description: 'lorem ipsum',
+        url: 'http://lnkr.site',
+        tagIds: [tags[0].id],
+        short: true,
+      })
+      .expect(200)
+
+    const newTags = await Promise.all(
+      tags.map(async (tag) => {
+        await tag.load('links')
+        return tag
+      })
+    )
+
+    assert.lengthOf(newTags[0].links, 1)
+    assert.lengthOf(newTags[1].links, 0)
+
+    assert.property(response.body, 'link')
+    assert.property(response.body.link, 'short_url')
+    assert.property(response.body.link, 'short_id')
+  })
+
   test('should GET in /api/links list all links', async (assert) => {
     const links = await LinkFactory.merge({ userId: user.id }).createMany(5)
 
@@ -89,7 +123,7 @@ test.group('LinksController', (group) => {
     assert.lengthOf(response.body.links, links.length)
   })
 
-  test.only('should GET in /api/links/:id show link by id', async (assert) => {
+  test('should GET in /api/links/:id show link by id', async (assert) => {
     const links = await LinkFactory.merge({ userId: user.id }).createMany(3)
 
     const response = await api

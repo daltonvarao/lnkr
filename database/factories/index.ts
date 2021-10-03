@@ -25,6 +25,8 @@ export const LinkFactory = Factory.define(Link, ({ faker }) => {
     title: faker.internet.userName(),
     description: faker.lorem.sentence(20),
     url: faker.internet.domainName(),
+    shortId: faker.random.alphaNumeric(6),
+    shortUrl: faker.internet.domainName(),
   }
 })
   .relation('tags', () => TagFactory)

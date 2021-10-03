@@ -84,6 +84,7 @@ export const SelectContainer = styled.div`
 
 export const SelectList = styled.div`
   position: absolute;
+  z-index: 100;
   width: 100%;
   display: flex;
   top: 0.5rem;

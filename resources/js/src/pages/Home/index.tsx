@@ -19,6 +19,7 @@ import {
   SearchByContainer,
   SearchByGroup,
   SearchContainer,
+  ContentShortUrl,
 } from './styles'
 
 import * as Fi from 'react-icons/fi'
@@ -40,6 +41,7 @@ interface LinkProps {
   title: string
   description: string
   url: string
+  short_url: string
   tags: Tag[]
   id: number
 }
@@ -171,7 +173,18 @@ const Home: React.FC = () => {
                 <ShowQRCode value={result.url} />
               </ContentHeader>
               <ContentDescription>{result.description}</ContentDescription>
-
+              {result.short_url && (
+                <ContentShortUrl>
+                  {result.short_url}
+                  <ButtonLink title="Copiar" onClick={() => copytoClipboard(result)}>
+                    {copiedIds.includes(result.id) ? (
+                      <Hi.HiOutlineClipboardCheck color={colors.success} size={22} />
+                    ) : (
+                      <Hi.HiOutlineClipboard size={22} />
+                    )}
+                  </ButtonLink>
+                </ContentShortUrl>
+              )}
               <ContentTags>
                 {result.tags.map((tag) => {
                   return (
@@ -194,6 +207,11 @@ const Home: React.FC = () => {
                     <Hi.HiOutlineClipboard size={22} />
                   )}
                 </ButtonLink>
+                {!result.short_url ? (
+                  <ButtonLink title="Encurtar" onClick={() => copytoClipboard(result)}>
+                    <Fi.FiLink />
+                  </ButtonLink>
+                ) : null}
 
                 <Link
                   title="Editar"

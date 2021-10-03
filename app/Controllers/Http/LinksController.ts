@@ -1,6 +1,9 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import Link from 'App/Models/Link'
+import { nanoid } from 'nanoid'
+import App from '@ioc:Adonis/Core/Application'
+import Env from '@ioc:Adonis/Core/Env'
 
 export default class LinksController {
   public async index({ auth, request, response }: HttpContextContract) {
@@ -72,14 +75,29 @@ export default class LinksController {
       description: schema.string(),
       url: schema.string(),
       tagIds: schema.array().members(schema.number()),
+      short: schema.boolean.optional(),
     })
 
-    const { tagIds, ...data } = await request.validate({
+    const { tagIds, short, ...data } = await request.validate({
       schema: validationSchema,
     })
 
     try {
-      const link = await user.related('links').create(data)
+      const link = new Link().merge({ ...data, userId: user.id })
+
+      if (short) {
+        const shortId = nanoid(6)
+
+        if (App.inProduction) {
+          const shortUrl = `http://lnkr.site/${shortId}`
+          link.merge({ shortId, shortUrl })
+        } else {
+          const shortUrl = `http://${Env.get('HOST')}:${Env.get('PORT')}/${shortId}`
+          link.merge({ shortId, shortUrl })
+        }
+      }
+
+      await link.save()
       await link.related('tags').attach(tagIds)
 
       return {

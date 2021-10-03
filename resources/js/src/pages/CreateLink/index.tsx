@@ -3,10 +3,11 @@ import { useHistory } from 'react-router'
 
 import { useAlert } from '../../providers/alerts'
 import { ErrorMessage } from '../../styles/globals'
-import { Container, Title } from './styles'
+import { Container, FormGroup, Title } from './styles'
 import api from '../../services/api'
 import Loader from '../../components/Loader'
 import MultiSelect from '../../components/MultiSelect'
+import Switch from '../../components/Switch'
 
 interface Categoria {
   id: number
@@ -21,6 +22,7 @@ const CreateLink: React.FC = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [url, setUrl] = useState('')
+  const [short, setShort] = useState(false)
 
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -37,6 +39,7 @@ const CreateLink: React.FC = () => {
       title,
       description,
       url,
+      short,
       tagIds: tags.map(({ id }) => id),
     }
 
@@ -104,12 +107,23 @@ const CreateLink: React.FC = () => {
           }}
         />
 
+        <FormGroup>
+          <Switch
+            id="encurtar"
+            checked={short}
+            onChange={(ev) => {
+              setShort(ev.target.checked)
+            }}
+          />
+          <label htmlFor="encurtar">Encurtar</label>
+        </FormGroup>
+
         {error && <ErrorMessage>{error}</ErrorMessage>}
 
         <button
           disabled={loading || !(title && description && url && tags.length)}
           onClick={handleCreateLink}
-          className="primary flex align-items-center justify-content-center w-100"
+          className="primary flex align-items-center justify-content-center w-100 mt-1"
         >
           Salvar &nbsp;
           {loading && <Loader color="#fff" size={20} inline />}

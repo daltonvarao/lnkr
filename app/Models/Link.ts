@@ -16,6 +16,12 @@ export default class Link extends BaseModel {
   public url: string
 
   @column()
+  public shortUrl: string
+
+  @column()
+  public shortId: string
+
+  @column()
   public userId: number
 
   @manyToMany(() => Tag)

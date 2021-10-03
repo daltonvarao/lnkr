@@ -17,3 +17,17 @@ export const Container = styled.div`
 export const Title = styled.h2`
   margin-bottom: 2rem;
 `
+export const FormGroup = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  label {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    margin-left: 0.5rem;
+    color: #676767;
+    font-weight: 400;
+  }
+`

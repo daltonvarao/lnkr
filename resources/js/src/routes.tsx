@@ -16,6 +16,7 @@ import Profile from './pages/Profile'
 import Error404 from './pages/Errors/404'
 import Alerts from './components/Alerts'
 import EditLink from './pages/EditLink'
+import ShortLink from './pages/ShortLink'
 
 interface ProtectedRouteProps {
   path: string
@@ -77,6 +78,9 @@ const Routes = () => {
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
               <Profile />
+            </ProtectedRoute>
+            <ProtectedRoute path="/:short_id">
+              <ShortLink />
             </ProtectedRoute>
 
             <Route path="/register">

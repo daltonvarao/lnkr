@@ -79,14 +79,6 @@ input[type='password'] {
   border-radius: 0.35rem;
 }
 
-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1b3586;
-  display: block;
-  margin-bottom: 0.25rem;
-}
-
 textarea:focus,
 input[type='text']:focus,
 input[type='password']:focus {
@@ -101,6 +93,18 @@ input[type='text']:hover,
 input[type='password']:hover {
   box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.25);
   transition: box-shadow ease-in-out 0.15s, border-color ease-in-out 0.15s;
+}
+
+textarea {
+  vertical-align: top;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1b3586;
+  display: block;
+  margin-bottom: 0.25rem;
 }
 
 button {
@@ -147,11 +151,9 @@ button.primary:disabled {
   background: #998cff;
 }
 
-input + label,
-input + div,
-input + input,
 div + button,
-input + button,
-input + textarea {
-  margin-top: 0.5rem;
+textarea + input,
+input + textarea,
+input + div {
+  margin-top: 1rem;
 }

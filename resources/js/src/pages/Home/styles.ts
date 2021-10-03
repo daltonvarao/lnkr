@@ -153,6 +153,22 @@ export const ContentTitle = styled.h3`
   max-width: 80%;
 `
 
+export const ContentShortUrl = styled.p`
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f0fd;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+
+  button {
+    color: #121212;
+  }
+`
+
 export const ContentDescription = styled.p`
   text-align: justify;
   line-height: 28px;
